@@ -9,7 +9,7 @@ class Alumnos:
     def GET(self):
         try:
             data=web.input()
-            if(data['action']=='get' and data['token']=='1234'):
+            if(data['token']=='1234'):
                 inf={}
                 inf['version']="0.01"
                 inf['status']="200 ok"
