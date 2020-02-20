@@ -9,21 +9,24 @@ class Alumnos:
     def GET(self):
         try:
             data=web.input()
-            if(data['token']=='1234'):
-                action=data['action']
-                result={}
+            if(data['action']=='get' and data['token']=='1234'):
+                inf={}
+                inf['version']="0.01"
+                inf['status']="200 ok"
                 result="matricula,nombre,primer_apellido,segundo_apellido,carrera\n"
                 with open('static/csv/alumnos.csv', 'r') as csvfile:
                     reader = csv.DictReader(csvfile)
+                    result=[]
                     for row in reader:
-                        print(row)
-                        result={}
-                        result['matricula']=row['matricula']
-                        result['nombre']=row['nombre']
-                        result['primer_apellido']=row['primer_apellido']
-                        result['segundo_apellido']=row['segundo_apellido']
-                        result['carrera']=row['carrera']
-                return json.dumps(result)
+                        resulta={}
+                        resulta['matricula']=row['matricula']
+                        resulta['nombre']=row['nombre']
+                        resulta['primer_apellido']=row['primer_apellido']
+                        resulta['segundo_apellido']=row['segundo_apellido']
+                        resulta['carrera']=row['carrera']
+                        result.append(resulta)
+                    inf['alumno']=result
+                    return json.dumps(inf)
         except Exception as e:
             result=[]    
             result.append('error'+ str(e.args))
