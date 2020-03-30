@@ -81,51 +81,136 @@ class Alumnos:
                             inf['alumno']=result
                     return json.dumps(inf)
                 
-                # http://localhost:8080/alumnos?action=actualizar&token=1234&matricula=171601&nombre=Eliazar&primer_apellido=Rodriguez&segundo_apellido=Velasco&carrera=TIC
+                if(data['action']=='delete'):
+                    inf={}
+                    inf['version']="0.01"
+                    inf['status']="200 ok"
+                    cabeza=['matricula','nombre','primer_apellido','segundo_apellido','carrera']
+                    with open('static/csv/respaldo.csv', 'w', newline='') as w:
+                        w=csv.writer(w)
+                        w.writerow(cabeza)
+                    with open('static/csv/alumnos.csv', 'r') as csvfile:
+                        reader = csv.DictReader(csvfile)
+                        result=[]
+                        res=[]
+                        for row in reader:
+                            result=[]
+                            ma2=str(data['matricula'])
+                            ma=str(row['matricula'])
+                            no=str(row['nombre'])
+                            ap=str(row['primer_apellido'])
+                            am=str(row['segundo_apellido'])
+                            ca=str(row['carrera'])
+                            result.append(ma)
+                            result.append(no)
+                            result.append(ap)
+                            result.append(am)
+                            result.append(ca)
+                            if(ma!=ma2):
+                                with open ('static/csv/respaldo.csv', 'a+', newline='') as csvwrite:
+                                    writer=csv.writer(csvwrite)
+                                    writer.writerow(result)
+                    cabeza=['matricula','nombre','primer_apellido','segundo_apellido','carrera']
+                    with open('static/csv/alumnos.csv', 'w', newline='') as w:
+                        w=csv.writer(w)
+                        w.writerow(cabeza)
+                    with open('static/csv/respaldo.csv', 'r') as csvread:
+                        reader=csv.DictReader(csvread)
+                        alumno=[]
+                        for row in reader:
+                            result=[]
+                            ma2=str(data['matricula'])
+                            ma=str(row['matricula'])
+                            no=str(row['nombre'])
+                            ap=str(row['primer_apellido'])
+                            am=str(row['segundo_apellido'])
+                            ca=str(row['carrera'])
+                            result.append(ma)
+                            result.append(no)
+                            result.append(ap)
+                            result.append(am)
+                            result.append(ca)
+                            with open ('static/csv/alumnos.csv', 'a+', newline='') as csvwrite:
+                                writer=csv.writer(csvwrite)
+                                writer.writerow(result)
+                    with open('static/csv/alumnos.csv', 'r') as csvfile:
+                        reader = csv.DictReader(csvfile)
+                        result=[]
+                        for row in reader:
+                            resulta={}
+                            resulta['matricula']=str(row['matricula'])
+                            resulta['nombre']=str(row['nombre'])
+                            resulta['primer_apellido']=str(row['primer_apellido'])
+                            resulta['segundo_apellido']=str(row['segundo_apellido'])
+                            resulta['carrera']=str(row['carrera'])
+                            result.append(resulta)
+                        inf['alumno']=result
+                        return json.dumps(inf)
+
                 if(data['action']=='update'):
                     inf={}
                     inf['version']="0.01"
-                    inf['status']="200 ok"  
-                    result="matricula,nombre,primer_apellido,segundo_apellido,carrera"
-                    matricula_2=str(data['matricula'])
-                    nombre_2=str(data['nombre'])
-                    primer_apellido_2=str(data['primer_apellido'])
-                    segundo_apellido_2=str(data['segundo_apellido'])
-                    carrera_2=str(data['carrera'])
-
+                    inf['status']="200 ok"
+                    cabeza=['matricula','nombre','primer_apellido','segundo_apellido','carrera']
+                    with open('static/csv/respaldo.csv', 'w', newline='') as w:
+                        w=csv.writer(w)
+                        w.writerow(cabeza)
                     with open('static/csv/alumnos.csv', 'r') as csvfile:
                         reader = csv.DictReader(csvfile)
-                        result=[] # se utilizará este arreglo para modificar los registros del CSV (obtiene una fila, si es necesario la modifica y al final envía al archivo)
+                        result=[]
+                        res=[]
+                        for row in reader:
+                            result=[]
+                            ma2=str(data['matricula'])
+                            ma=str(row['matricula'])
+                            no=str(row['nombre'])
+                            ap=str(row['primer_apellido'])
+                            am=str(row['segundo_apellido'])
+                            ca=str(row['carrera'])
+                            result.append(ma)
+                            result.append(no)
+                            result.append(ap)
+                            result.append(am)
+                            result.append(ca)
+                            if(ma!=ma2):
+                                with open ('static/csv/respaldo.csv', 'a+', newline='') as csvwrite:
+                                    writer=csv.writer(csvwrite)
+                                    writer.writerow(result)
+                    cabeza=['matricula','nombre','primer_apellido','segundo_apellido','carrera']
+                    with open('static/csv/alumnos.csv', 'w', newline='') as w:
+                        w=csv.writer(w)
+                        w.writerow(cabeza)
+                    with open('static/csv/respaldo.csv', 'r') as csvread:
+                        reader=csv.DictReader(csvread)
+                        alumno=[]
+                        for row in reader:
+                            result=[]
+                            ma2=str(data['matricula'])
+                            ma=str(row['matricula'])
+                            no=str(row['nombre'])
+                            ap=str(row['primer_apellido'])
+                            am=str(row['segundo_apellido'])
+                            ca=str(row['carrera'])
+                            result.append(ma)
+                            result.append(no)
+                            result.append(ap)
+                            result.append(am)
+                            result.append(ca)
+                            with open ('static/csv/alumnos.csv', 'a+', newline='') as csvwrite:
+                                writer=csv.writer(csvwrite)
+                                writer.writerow(result)
+                    with open('static/csv/alumnos.csv', 'r') as csvfile:
+                        reader = csv.DictReader(csvfile)
+                        result=[]
                         for row in reader:
                             resulta={}
-                            # comprueba que la fila sea la indicada para modificar, en base a la matricula dada como parametro en la URL
-                            if (row['matricula'] == matricula_2):
-                                resulta['matricula']=str(row['matricula'])
-                                resulta['nombre']=nombre_2
-                                resulta['primer_apellido']=primer_apellido_2
-                                resulta['segundo_apellido']=segundo_apellido_2
-                                resulta['carrera']=carrera_2
-                            else:
-                                resulta['matricula']=str(row['matricula'])
-                                resulta['nombre']=str(row['nombre'])
-                                resulta['primer_apellido']=str(row['primer_apellido'])
-                                resulta['segundo_apellido']=str(row['segundo_apellido'])
-                                resulta['carrera']=str(row['carrera'])
+                            resulta['matricula']=str(row['matricula'])
+                            resulta['nombre']=str(row['nombre'])
+                            resulta['primer_apellido']=str(row['primer_apellido'])
+                            resulta['segundo_apellido']=str(row['segundo_apellido'])
+                            resulta['carrera']=str(row['carrera'])
                             result.append(resulta)
                         inf['alumno']=result
-                        
-                        # sobreescribe el archivo CSV con los valores modificados
-                        with open('static/csv/alumnos.csv', 'w') as csvfile:
-                            nombres_campos = ['matricula','nombre','primer_apellido','segundo_apellido','carrera']
-                            writer = csv.DictWriter(csvfile, fieldnames=nombres_campos)
-                            
-                            writer.writeheader() # escribe los nombres de los campos en el encabezado del CSV
-                            for i in range(0, len(result)):
-                                # writer.writerow({'field1': 'A', 'field2': 'B', 'field3': 'C'})
-                                writer.writerow(result[i])
-                                print(result[i]) # print de prueba...
-
-                                inf['alumno']=result[i]
                         return json.dumps(inf)
 
 
