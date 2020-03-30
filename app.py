@@ -2,7 +2,7 @@ import web
 
 urls = (
     '/', 'Hello',
-    '/alumnos/?', 'application.controllers.alumnos.Alumnos',
+    '/?', 'application.controllers.alumnos.Alumnos',
 )
 
 app = web.application(urls, globals())
